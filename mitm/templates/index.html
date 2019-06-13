@@ -32,23 +32,7 @@
                     addr2: $(addr2).val()
                 },
                 success: function(result) {
-                    d = JSON.parse(result);
-
-                    var platform = new H.service.Platform({
-                        'app_id': config.app_id,
-                        'app_code': config.app_code
-                    });
-
-                    var maptypes = platform.createDefaultLayers();
-
-                    var map = new H.Map(
-                        document.getElementById('mapContainer'),
-                        maptypes.normal.map,
-                        {
-                            zoom: 10,
-                            center: { lng: d.Longitude, lat: d.Latitude }
-                        }
-                    );
+                    showMap(result);
                 },
                 error: function(err) {
                     console.log(err);
@@ -56,6 +40,28 @@
             });
         });
     });
+
+    function showMap(result) {
+        coords = JSON.parse(result);
+
+        var platform = new H.service.Platform({
+            'app_id': config.app_id,
+            'app_code': config.app_code
+        });
+
+        var maptypes = platform.createDefaultLayers();
+
+        var map = new H.Map(
+            document.getElementById('mapContainer'),
+            maptypes.normal.map,
+            {
+                zoom: 10,
+                center: { lng: coords.Longitude, lat: coords.Latitude }
+            }
+        );
+    }
+
+
     </script>
 
 </body>
