@@ -11,6 +11,9 @@
     <script src="{{url_for('static', filename='js/config.js')}}"></script>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="UTF-8" src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
 </head>
 <body>
     <input id="addr1" type="text" placeholder="First Address"/>
@@ -59,6 +62,35 @@
                 center: { lng: coords.Longitude, lat: coords.Latitude }
             }
         );
+
+        // display markers
+        var group = new H.map.Group();
+        var ui = H.ui.UI.createDefault(map, platform.createDefaultLayers());
+        map.addObject(group);
+
+        var search = new H.places.Around(platform.getPlacesService()), searchResult, error;
+        
+        var params = {
+            'at': coords.Latitude + "," + coords.Longitude,
+            'cat': 'eat-drink'
+        };
+
+        function onResult(data) {
+            addPlacesToMap(data.results);
+        }
+
+        function onError(error) {
+            console.log(error);
+        }
+
+        function addPlacesToMap(result) {
+            group.addObjects(result.items.map(function(place) {
+                var marker = new H.map.Marker({lat: place.position[0], lng: place.position[1]})
+                return marker;
+            }));
+        }
+
+        search.request(params, {}, onResult, onError);
     }
 
 
