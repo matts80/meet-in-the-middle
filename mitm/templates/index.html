@@ -5,12 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Meet in the Middle</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
+    </script>
 </head>
 <body>
-    Address 1: <input id="addr1" type="text" />
-    <br>
-    Address 2: <input id="addr2" type="text" />
-    <p></p>
+    <input id="addr1" type="text" placeholder="First Address"/>
+    <input id="addr2" type="text" placeholder="Second Address"/>
+        
     <button id="btnSubmit">Meet in the Middle</button>
+
+    <script>
+    $(document).ready(function() {
+        $("#btnSubmit").click(function(e) {
+            console.log("Hey");
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/calcmiddle",
+                data: {
+                    addr1: $(addr1).val(),
+                    addr2: $(addr2).val()
+                },
+                success: function(result) {
+                    console.log(result);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+    
+    </script>
+
+
 </body>
 </html>
