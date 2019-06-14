@@ -46,11 +46,12 @@
     });
 
     function showMap(result) {
-        coords = JSON.parse(result);
+        data = JSON.parse(result);
+        coords = data['coords'];
 
         var platform = new H.service.Platform({
-            'app_id': config.app_id,
-            'app_code': config.app_code
+            'app_id': "{{ creds[0] }}",
+            'app_code': "{{ creds[1] }}"
         });
 
         var maptypes = platform.createDefaultLayers();
@@ -65,12 +66,16 @@
         );
 
         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-
+        
+        
         // display markers
         var group = new H.map.Group();
         var ui = H.ui.UI.createDefault(map, platform.createDefaultLayers());
         map.addObject(group);
 
+        addPlacesToMap(data['pins']['results']);
+
+        /*
         var search = new H.places.Around(platform.getPlacesService()), searchResult, error;
         
         var params = {
@@ -79,12 +84,14 @@
         };
 
         function onResult(data) {
+            console.log(data);
             addPlacesToMap(data.results);
         }
 
         function onError(error) {
             console.log(error);
         }
+        */
 
         function addPlacesToMap(result) {
             group.addObjects(result.items.map(function(place) {
@@ -93,9 +100,9 @@
             }));
         }
 
-        search.request(params, {}, onResult, onError);
+        //search.request(params, {}, onResult, onError);
+        
     }
-
 
     </script>
 

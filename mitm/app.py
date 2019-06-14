@@ -9,7 +9,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return render_template("index.html")
+    creds = [os.environ.get('HERE_APP_ID'), os.environ.get('HERE_APP_CODE')]
+
+    return render_template("index.html", creds=creds)
 
 @app.route("/calcmiddle", methods=['POST'])
 def calcmiddle():
@@ -39,4 +41,25 @@ def calcmiddle():
     lon3 = lon1 + atan2(by, cos(lat1) + bx)
     
     mid = {'Latitude': degrees(lat3), 'Longitude': degrees(lon3)}
-    return json.dumps(mid)
+    pins = getpins(mid)
+
+    ret = {'coords': mid, 'pins': pins}
+
+    return json.dumps(ret)
+
+def getpins(mid):
+    app_id = os.environ.get('HERE_APP_ID')
+    app_code = os.environ.get('HERE_APP_CODE')
+
+    at = str(mid['Latitude']) + ',' + str(mid['Longitude'])
+    
+    payload = {'app_id': app_id, 'app_code': app_code, 'at': at, 'cat': 'eat-drink'}
+
+    r = requests.get('https://places.api.here.com/places/v1/discover/explore', params=payload)
+    data = r.json()
+
+    return data
+
+
+
+
