@@ -23,9 +23,11 @@ export HERE_APP_CODE=<your_here_app_code>
 export FLASK_APP=mitm/app
 ```
 
-4.  Run the app:
+4.  Navigate to `static/js` and rename `example_config.js` to `config.js`.  Add your [Here](http://here.com) APP_ID and APP_CODE there, too.  *This will be removed in the future*
+
+5.  Run the app:
 ```bash
 flask run
 ```
 
-5.  Navigate to [localhost:5000](http://localhost:5000) to view the app.
+6.  Navigate to [localhost:5000](http://localhost:5000) to view the app.
