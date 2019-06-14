@@ -3,10 +3,10 @@
 # OS Support also exists for jessie & stretch (slim and full).
 # See https://hub.docker.com/r/library/python/ for all supported Python
 # tags from Docker Hub.
-FROM python:alpine
+#FROM python:alpine
 
 # If you prefer miniconda:
-#FROM continuumio/miniconda3
+FROM continuumio/miniconda3
 
 LABEL Name=meet-in-the-middle Version=0.0.1
 EXPOSE 5000
@@ -15,14 +15,9 @@ WORKDIR /app
 ADD . /app
 
 # Using pip:
-RUN python3 -m pip install -r requirements.txt
-CMD ["python3", "-m", "meet-in-the-middle"]
+RUN pip install -r requirements.txt
+ENV HERE_APP_ID=724ebxFp9qPTR7u9STAe
+ENV HERE_APP_CODE=7VtRmAx9peLEe_ptg-n42g
+ENV FLASK_APP=mitm/app
 
-# Using pipenv:
-#RUN python3 -m pip install pipenv
-#RUN pipenv install --ignore-pipfile
-#CMD ["pipenv", "run", "python3", "-m", "meet-in-the-middle"]
-
-# Using miniconda (make sure to replace 'myenv' w/ your environment name):
-#RUN conda env create -f environment.yml
-#CMD /bin/bash -c "source activate myenv && python3 -m meet-in-the-middle"
+CMD ["flask", "run", "--host=0.0.0.0"]
