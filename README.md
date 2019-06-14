@@ -9,7 +9,7 @@ To run the app locally, you first need to signup for a free API key from [Here](
 git clone https://github.com/matts80/meet-in-the-middle.git
 ```
 
-2.  Create a new python3 virtualenv and install the requirements:
+2.  From inside the project directory, create a new python3 virtualenv and install the requirements:
 ```bash
 virtualenv -p `which python3` venv
 source venv/bin/activate
