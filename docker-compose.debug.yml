@@ -1,0 +1,10 @@
+version: '2.1'
+
+services:
+  meet-in-the-middle:
+    image: meet-in-the-middle
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
