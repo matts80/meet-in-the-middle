@@ -16,8 +16,8 @@ ADD . /app
 
 # Using pip:
 RUN pip install -r requirements.txt
-ENV HERE_APP_ID=724ebxFp9qPTR7u9STAe
-ENV HERE_APP_CODE=7VtRmAx9peLEe_ptg-n42g
+ENV HERE_APP_ID=<your-here-app-id>
+ENV HERE_APP_CODE=<your-here-app-code>
 ENV FLASK_APP=mitm/app
 
 CMD ["flask", "run", "--host=0.0.0.0"]
